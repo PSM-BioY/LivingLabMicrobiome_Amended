@@ -141,16 +141,19 @@ for detM in detectorModels:
 # Write detectors
 ws = wb["Detectors"]
 
-for i, ins in enumerate(instruments):
-    for det in detectors:
+insts = list(map(lambda i: i["instrument"], instruments))
 
-        data = [det_pre + det["detector"] + "-" + padZero(i + 1)]
-        data.append(det_model_pre + det["detector"])
-        data.append(det["detector"])
-        data.append("")
-        data.append(ins_pre + padZero(i + 1))
+for det in detectors:
 
-        ws.append(data)
+    i = insts.index(det["instrument"])
+
+    data = [det_pre + det["detector"] + "-" + padZero(i + 1)]
+    data.append(det_model_pre + det["detector"])
+    data.append(det["detector"])
+    data.append("")
+    data.append(ins_pre + padZero(i + 1))
+
+    ws.append(data)
 
 wb.save("DPL-{}.xlsx".format(STUDY_NAME))
 
